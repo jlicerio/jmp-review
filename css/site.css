@@ -320,6 +320,31 @@ h2 + hr { margin-top: 0; }
    three lines need air between them; single-line rows do not. */
 .cv-list p + p { margin-top: 0.6em; }
 
+/* Phone chrome in the flow (D-1 fix). The header reserves its own height,
+   so nothing fixed sits over text at any scroll offset. */
+@media screen and (max-width: 1015px) {
+  .site-head { padding: 8px 8px 0; }
+  .head-row { display: flex; gap: 8px; align-items: flex-start; }
+
+  #julien, #info, .menu, .mennu {
+    position: static;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    margin: 0;
+    background: none;
+  }
+  #julien { flex: 0 0 138px; }
+  #julien a { white-space: nowrap; }
+  #info { flex: 1; }
+  .menu { display: none; }
+  .mennu { display: block; margin-top: 8px; padding-bottom: 14px; }
+
+  /* The header now clears the top, so pages need no fixed-chrome pad. */
+  .content, .work-page { padding-top: 1.2rem; }
+}
+
 /* ---------- 9. Work index ---------- */
 /* The system mutes links by default. An index needs the opposite:
    the project name is the subject, the role is the annotation. */

@@ -87,30 +87,7 @@
   .hero .slide, .zone svg, a { transition: none; }
 }
 
-/* ---------- 2. Phone chrome in the flow (D-1 fix) ---------- */
 @media screen and (max-width: 1015px) {
-  .site-head { padding: 8px 8px 0; }
-  .head-row { display: flex; gap: 8px; align-items: flex-start; }
-
-  #julien, #info, .menu, .mennu {
-    position: static;
-    left: auto;
-    right: auto;
-    top: auto;
-    bottom: auto;
-    margin: 0;
-    background: none;
-  }
-  #julien { flex: 0 0 138px; }
-  #julien a { white-space: nowrap; }
-  #info { flex: 1; }
-  .menu { display: none; }
-  .mennu { display: block; margin-top: 8px; padding-bottom: 14px; }
-
-  /* The header now reserves its own height, so the pages no longer need
-     a top pad wide enough for fixed chrome. */
-  .content, .work-page { padding-top: 1.2rem; }
-
   /* Hero on a phone: image in the flow, rail under it. */
   .hero { height: auto; min-height: 0; padding-top: 10px; }
   .hero .stage { height: auto; margin-top: 0; padding: 0; min-height: 0; }
