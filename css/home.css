@@ -1,0 +1,123 @@
+/* =========================================================
+   Home — one project per screen, then the archive below.
+   Loaded after site.css and work.css.
+   ========================================================= */
+
+/* ---------- 1. Hero ---------- */
+.hero {
+  position: relative;
+  height: max(100vh, 760px);
+  padding-top: 144px;
+}
+
+.hero .stage {
+  position: relative;
+  height: 611px;
+  margin-top: 0;
+  padding: 0 var(--gutter);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero .slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 300ms cubic-bezier(0.4, 0, 0.22, 1);
+}
+.hero .slide.on { opacity: 1; z-index: 2; }
+.hero .slide img {
+  max-height: 611px;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+}
+
+/* Invisible edge zones. The chevron fades in under the pointer. */
+.zone {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 140px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  -webkit-tap-highlight-color: transparent;
+}
+.zone.left { left: 0; }
+.zone.right { right: 0; }
+.zone svg {
+  width: 26px;
+  height: 26px;
+  opacity: 0;
+  transition: opacity 333ms cubic-bezier(0.4, 0, 0.22, 1);
+}
+.zone:hover svg,
+.zone:focus-visible svg { opacity: 0.55; }
+.zone:focus-visible { outline: 1px solid var(--hairline); outline-offset: -6px; }
+
+.rail {
+  position: absolute;
+  left: 9px;
+  right: 15px;
+  bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: var(--type-caption);
+  line-height: 1.35;
+  color: var(--muted);
+}
+.rail .count { color: var(--muted-2); font-variant-numeric: tabular-nums; }
+
+/* The sheet follows the hero with its own breathing room. */
+.sheet-page { padding-top: 3.2rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero .slide, .zone svg, a { transition: none; }
+}
+
+/* ---------- 2. Phone chrome in the flow (D-1 fix) ---------- */
+@media screen and (max-width: 1015px) {
+  .site-head { padding: 8px 8px 0; }
+  .head-row { display: flex; gap: 8px; align-items: flex-start; }
+
+  #julien, #info, .menu, .mennu {
+    position: static;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    margin: 0;
+    background: none;
+  }
+  #julien { flex: 0 0 138px; }
+  #julien a { white-space: nowrap; }
+  #info { flex: 1; }
+  .menu { display: none; }
+  .mennu { display: block; margin-top: 8px; padding-bottom: 14px; }
+
+  /* The header now reserves its own height, so the pages no longer need
+     a top pad wide enough for fixed chrome. */
+  .content, .work-page { padding-top: 1.2rem; }
+
+  /* Hero on a phone: image in the flow, rail under it. */
+  .hero { height: auto; min-height: 0; padding-top: 10px; }
+  .hero .stage { height: auto; margin-top: 0; padding: 0; min-height: 0; }
+  .hero .slide { position: relative; display: none; }
+  .hero .slide.on { display: flex; }
+  .hero .slide img { width: 100%; height: auto; max-height: none; }
+  .zone { width: 70px; }
+  .rail { position: static; margin-top: 10px; padding-bottom: 8px; }
+  .sheet-page { padding-top: 1.6rem; }
+}
