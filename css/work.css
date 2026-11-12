@@ -1,0 +1,216 @@
+/* =========================================================
+   Work section — extends css/site.css
+   Same three rules as the template: type smaller than body,
+   chrome floats over the work, one 40% hairline divides.
+   New here: an image grid, a poster wall, a caption row.
+   ========================================================= */
+
+/* ---------- 1. Page shell ---------- */
+.work-page {
+  --work-measure: 1280px;      /* images want more width than text */
+  padding: var(--gutter);
+  padding-top: var(--page-top); /* one owner, see site.css */
+  padding-bottom: 5rem;
+}
+
+.work-page > .lede {
+  max-width: var(--measure);
+  margin-bottom: 1.2em;
+  color: var(--muted);
+}
+
+/* ---------- 2. Section header: label | note ---------- */
+.section-head {
+  display: flex;
+  max-width: var(--measure);
+  margin-top: 3.2rem;
+  margin-bottom: 1rem;
+  align-items: baseline;
+}
+.section-head .label {
+  flex: 0 0 182px;
+  color: var(--ink);
+}
+.section-head .note {
+  flex: 1;
+  color: var(--muted);
+  font-size: var(--type-small);
+}
+
+/* ---------- 3. Contact sheet ---------- */
+.sheet {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.4rem 1rem;
+  max-width: var(--work-measure);
+}
+
+.sheet figure { margin: 0; min-width: 0; }
+
+.sheet a { display: block; }
+
+.sheet .plate {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.04);
+}
+.sheet .plate img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 160ms linear;
+}
+.sheet figure:hover .plate img { opacity: 0.72; }
+
+.sheet figcaption {
+  display: flex;
+  min-width: 0;
+  justify-content: space-between;
+  gap: 0.6em;
+  margin-top: 0.45em;
+  font-size: var(--type-caption);
+  line-height: 1.25;
+}
+.sheet .idx { color: var(--muted-2); flex: 0 0 auto; }
+.sheet .name { text-align: right; color: var(--muted); overflow-wrap: anywhere; }
+.sheet figure:hover .name { color: var(--ink); }
+
+/* ---------- 4. Poster wall ---------- */
+.wall {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3rem 2rem;
+  max-width: var(--work-measure);
+}
+
+.wall figure { margin: 0; }
+.wall img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.wall .plate { display: block; }
+
+.spec {
+  margin-top: 0.6em;
+  font-size: var(--type-caption);
+  line-height: 1.35;
+  color: var(--muted);
+}
+.spec .when {
+  color: var(--ink);
+  display: block;
+  margin-bottom: 0.15em;
+}
+.spec .lineup { color: var(--ink); }
+.spec .where,
+.spec .meta { display: block; }
+.spec .meta .day { color: var(--muted); }
+.spec .meta { margin-top: 0.25em; color: var(--muted-2); }
+
+/* ---------- 5. Big single plates ---------- */
+.essay {
+  max-width: var(--work-measure);
+}
+.essay figure {
+  margin: 0 0 4.5rem;
+}
+.essay .frame {
+  /* one photograph, one screen — the template's own slideshow rule.
+     width:auto keeps the scan at its own pixels, so nothing upscales. */
+  display: flex;
+  justify-content: flex-start;   /* one left edge for the whole page */
+  width: 100%;
+}
+.essay img {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: calc(100vh - 19rem);
+  object-fit: contain;
+}
+
+.essay figcaption {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.7em;
+  font-size: var(--type-caption);
+  color: var(--muted);
+  line-height: 1.35;
+}
+.essay figcaption .idx {
+  flex: 0 0 48px;
+  color: var(--muted-2);
+}
+.essay figcaption .title { flex: 1; color: var(--ink); }
+.essay figcaption .tech {
+  flex: 0 0 240px;
+  text-align: right;
+  color: var(--muted-2);
+}
+
+/* ---------- 6. Wide sheets ---------- */
+.plate-wide {
+  display: block;
+  width: 100%;
+  max-width: var(--work-measure);
+  height: auto;
+  margin: 1.6rem 0 0.6rem;
+}
+
+/* ---------- 7. Facts ---------- */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.2rem;
+  max-width: var(--measure);
+  padding: 1.3rem 0;
+  margin-top: 2rem;
+}
+.facts > div {
+  font-size: var(--type-caption);
+  line-height: 1.35;
+}
+.facts .label {
+  display: block;
+  margin-bottom: 0.4em;
+  color: var(--muted-2);
+}
+.facts .value { color: var(--ink); }
+
+/* ---------- 8. Pager ---------- */
+.pager {
+  display: flex;
+  justify-content: space-between;
+  max-width: var(--measure);
+  margin-top: 4rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--hairline);
+  font-size: var(--type-small);
+}
+.pager a { color: var(--muted); }
+.pager a:hover { color: var(--ink); }
+
+/* ---------- 9. Responsive ---------- */
+@media screen and (max-width: 1180px) {
+  .sheet { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media screen and (max-width: 1015px) {
+  .section-head .label { flex: 0 0 124px; }
+  .wall { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2rem 1.2rem; }
+  .essay .frame { width: 100%; }
+  .essay figcaption { flex-wrap: wrap; }
+  .essay figcaption .tech { flex: 0 0 100%; text-align: left; }
+}
+
+@media screen and (max-width: 620px) {
+  .sheet { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.4rem 0.8rem; }
+  .wall { grid-template-columns: minmax(0, 1fr); }
+  .section-head { display: block; }
+  .section-head .label { display: block; margin-bottom: 0.3em; }
+  .facts { grid-template-columns: minmax(0, 1fr); }
+}

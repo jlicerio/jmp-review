@@ -1,0 +1,337 @@
+/* =========================================================
+   Template — derived from julienhebert.com (Cargo.site)
+   Design system: single variable font, 22px body, 1.1 leading,
+   fixed four-corner nav, difference-blended overlay text.
+   ========================================================= */
+
+/* ---------- 1. Fonts ---------- */
+@font-face {
+  font-family: "Habitus";
+  font-weight: 500 600;
+  font-style: normal;
+  src: url("../fonts/HabitusMBAM4-Medium.woff") format("woff");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Habitus";
+  font-weight: 500 600;
+  font-style: italic;
+  src: url("../fonts/HabitusMBAM-MediumItalic.otf") format("opentype");
+  font-display: swap;
+}
+
+/* ---------- 2. Tokens ---------- */
+:root {
+  --ink: #000;
+  --paper: #fff;
+  --muted: rgba(0, 0, 0, 0.4);        /* links, captions, secondary */
+  --muted-2: rgba(0, 0, 0, 0.3);      /* labels inside tables */
+  --hairline: rgba(0, 0, 0, 0.4);
+
+  --type-body: 22px;
+  --type-title: 14px;                 /* h1/h2 — deliberately tiny */
+  --type-small: 12px;
+  --type-caption: 11px;
+  --leading: 1.1;
+
+  --weight: 560;                      /* variable-font mid weight */
+  --gutter: 2.3rem;
+  --edge: 8px;                        /* fixed-nav inset */
+  --breakpoint: 1015px;
+  --measure: 1050px;
+  --page-top: 4.4rem;                 /* clears the fixed nav, even when it wraps */
+  --name-offset-mobile: 146px;
+  --name-offset: 215px;   /* 9px inset + 190.8px name + 15px gap, measured */
+}
+
+/* ---------- 3. Base ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Habitus", Helvetica, Arial, sans-serif;
+  font-size: var(--type-body);
+  font-weight: var(--weight);
+  line-height: var(--leading);
+  -webkit-font-smoothing: antialiased;
+}
+
+p { margin: 0; }
+
+a:link,
+a:visited {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 120ms linear;
+}
+a:hover,
+a:active { color: var(--ink); }
+
+i, em { font-style: italic; }
+b, strong { font-weight: 700; }
+
+h1, h2 {
+  margin: 0;
+  padding: 0;
+  font-size: var(--type-title);
+  font-weight: var(--weight);
+  line-height: 1.2;
+}
+h2 { letter-spacing: -0.01em; }
+h1 a, h2 a { color: inherit; }
+
+small {
+  display: inline-block;
+  font-size: var(--type-small);
+  line-height: 1.1;
+  font-weight: var(--weight);
+}
+
+hr {
+  height: 1px;
+  margin: -6px 0 10px;
+  border: 0;
+  background: var(--hairline);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border: 0;
+}
+
+ul, ol { margin: 0; padding: 0 0 0 4em; }
+ol { list-style-type: decimal-leading-zero; }
+blockquote { margin: 0; padding: 0 0 0 2em; }
+
+/* ---------- 4. Fixed navigation (the whole chrome) ---------- */
+/* Four absolutely-pinned fragments, no bar, no border. Each collides
+   with content instead of being pushed by it. */
+
+#julien {
+  position: fixed;
+  left: 9px;
+  top: var(--edge);
+  z-index: 90;
+}
+
+#info {
+  position: fixed;
+  left: var(--name-offset);
+  top: var(--edge);
+  margin-right: 300px;
+  z-index: 90;
+}
+
+.menu {
+  position: fixed;
+  top: var(--edge);
+  right: 15px;
+  z-index: 90;
+  text-align: right;
+}
+
+/* The fixed chrome gets a paper back. It is invisible on a white page and
+   stops scrolling work from colliding with the statement. */
+#info,
+.menu,
+.mennu { background: var(--paper); }
+
+/* Mobile-only nav, bottom-left, sits beside the loading marker */
+.mennu {
+  position: fixed;
+  bottom: var(--edge);
+  left: 10px;
+  z-index: 90;
+}
+
+/* Overlay text that survives any photo behind it */
+.difference {
+  color: var(--paper);
+  mix-blend-mode: difference;
+}
+.difference a,
+.difference a:visited { color: rgba(255, 255, 255, 0.5); }
+.difference a:hover { color: #fff; }
+
+/* ---------- 5. Layout primitives ---------- */
+.page {
+  width: 100%;
+  background: transparent;
+}
+
+.content {
+  padding: var(--gutter);
+  padding-top: var(--page-top);
+}
+
+/* 182 | fluid — the site's two-column editorial grid */
+.flexbox {
+  display: flex;
+  max-width: var(--measure);
+}
+.one    { flex: 0 0 182px; }
+.two    { flex: 1; }
+.contact1 {
+  flex: 0 0 auto;        /* size to the email, not to a guess */
+  margin-right: 30px;    /* the gap that keeps the columns apart */
+}
+.contact2 { flex: 1; }
+
+/* CSS-grid equivalent for project pages (replaces Cargo's grid attrs) */
+.grid-row {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 0.5rem;
+}
+.col-9 { grid-column: span 9; }
+.col-3 { grid-column: span 3; }
+.col-5 { grid-column: span 5; }
+
+@media (max-width: 760px) {
+  .grid-row { grid-template-columns: 1fr; }
+  .col-9, .col-3, .col-5 { grid-column: 1 / -1; }
+}
+
+/* Five equal columns for spec/licence tables (Cargo's grid-col="x5") */
+.license-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1rem;
+  padding: 1.25rem 0.5rem;
+}
+.license-grid .label {
+  display: block;
+  margin-bottom: 0.6em;
+  font-size: var(--type-body);
+}
+.license-grid .muted { color: var(--muted-2); }
+@media (max-width: 760px) {
+  .license-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ---------- 6. Image gallery ---------- */
+.gallery {
+  position: relative;
+  width: 100%;
+}
+.content img { margin-bottom: 0.5em; }
+
+.gallery_image_caption {
+  position: absolute;
+  bottom: -12px;
+  z-index: 90;
+  font-size: var(--type-caption);
+  font-weight: 600;
+  line-height: 0;
+  color: #000;
+  opacity: 0;
+  transition: opacity 0s;
+}
+.content:hover .gallery_image_caption { opacity: 1; }
+
+/* Full-bleed slideshow page: 85% width, 6.5rem breathing room */
+.slideshow .frame {
+  width: 85%;
+  margin: 0 auto;
+  padding: 6.5rem 0.8rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+.slideshow .frame img {
+  max-height: calc(100vh - 13rem);
+  max-width: 100%;
+  width: auto;
+  margin: 0 auto;
+  object-fit: contain;
+}
+.slideshow .counter {
+  position: fixed;
+  bottom: var(--edge);
+  right: 15px;
+  font-size: var(--type-caption);
+  color: var(--muted);
+  z-index: 90;
+}
+
+/* ---------- 7. Responsive ---------- */
+@media screen and (min-width: 1015px) {
+  .mennu { display: none; }
+}
+
+@media screen and (max-width: 1015px) {
+  body { font-size: 15px; }
+  :root { --page-top: 4.6rem; }
+
+  #julien { left: 8px; top: var(--edge); }
+  #info   { left: var(--name-offset-mobile, 135px); right: var(--edge); top: var(--edge); margin-right: 0; }
+  .menu   { display: none; }
+
+  .flexbox { max-width: 700px; }
+  .one     { flex: 0 0 124px; position: relative; left: 2px; }
+  .flexbox { flex-wrap: wrap; }
+  .contact1,
+  .contact2 { flex: 0 0 100%; margin-right: 0; }
+
+  .indent {
+    flex: 1;
+    padding-left: 20px;
+    text-indent: -20px;
+  }
+
+  .infopage { position: relative; margin-top: 13px; }
+
+  .slideshow .frame { width: 100%; padding: 4rem 0.5rem; }
+}
+
+/* ---------- 8. Placeholder frame ---------- */
+/* Stands in for photography that does not exist yet. Never ship it. */
+.placeholder {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 3 / 2;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: rgba(0, 0, 0, 0.3);
+  font-size: var(--type-small);
+}
+.placeholder span { padding: 0.5em; text-align: center; }
+
+/* The global hr tucks up 6px, which is right under headings but cuts
+   through paragraph descenders. The project sidebar needs the space back. */
+.project-meta hr { margin-top: 12px; }
+
+/* The 6px tuck also lands inside a heading's line box, so the rule slashes
+   the descender of g, y and p ("Night", "Poster season"). A heading's box
+   already ends below its baseline, so zero clears the ink. */
+h2 + hr { margin-top: 0; }
+
+/* Leading 1.1 is meant for short paragraphs. Entries that wrap to two or
+   three lines need air between them; single-line rows do not. */
+.cv-list p + p { margin-top: 0.6em; }
+
+/* ---------- 9. Work index ---------- */
+/* The system mutes links by default. An index needs the opposite:
+   the project name is the subject, the role is the annotation. */
+.work-index { padding-top: var(--page-top); }
+.work-index h2 { margin-bottom: 0.4em; color: var(--muted); }
+.work-index .two { max-width: 640px; }
+.work-index .two > hr { margin: 0.6em 0; }
+
+a.entry-name,
+a.entry-name:link,
+a.entry-name:visited { color: var(--ink); }
+a.entry-name:hover { color: rgba(0, 0, 0, 0.5); }
+.entry-role,
+.entry-meta { color: var(--muted); }
+.entry-meta { display: inline-block; margin-top: 0.15em; }
